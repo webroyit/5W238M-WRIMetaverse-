@@ -17,7 +17,7 @@ function drawCanvas(){
     mainCanvas.height = 3 * plots + 4 * roads;
     worldImage.src = 'static/img/Moraland.png';
     worldImage.onload = () => {
-        mainCtx.drawImage(worldImage, 0, 0);
+        mainCtx.drawImage(worldImage, -1 * (plots + roads), -1 * (plots + roads));
     }
 }
 
