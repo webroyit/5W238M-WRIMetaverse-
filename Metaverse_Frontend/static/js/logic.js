@@ -18,6 +18,7 @@ function drawCanvas(){
     worldImage.src = 'static/img/Moraland.png';
     worldImage.onload = () => {
         mainCtx.drawImage(worldImage, -1 * (plots + roads), -1 * (plots + roads));
+        mainCtx.strokeRect(plots + (2 * roads), plots + (2 * roads), plots, plots);     // Add border for selected area
     }
 }
 
