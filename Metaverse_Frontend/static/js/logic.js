@@ -19,6 +19,9 @@ const worldImage = new Image();
 const mapView = {mapOffsetX:-1 * initialOffsets, mapOffsetY:-1 * initialOffsets};
 const plotView = {plotX:0, plotY:0, locationX:0, locationY:0};
 
+// web3 constants
+const ethers = Moralis.web3Library;
+
 // Canvas drawing functions
 function drawCanvas(){
     mainCanvas.width = 3 * plots + 4 * roads;
@@ -33,6 +36,7 @@ function drawCanvas(){
 
 function initializeMap() {
     updatePlotLocation();
+    setPlotData();
     drawMapSection(mainCtx, mapView.mapOffsetX, mapView.mapOffsetY);
     drawCursor(plotViewOffsets, plotViewOffsets);
     drawMapSection(plotCtx, -1 * plotView.locationX, -1 * plotView.locationY);
@@ -47,6 +51,7 @@ function move(direction) {
         drawMapSection(mainCtx, mapView.mapOffsetX, mapView.mapOffsetY);
         drawCursor(plotViewOffsets, plotViewOffsets);
         drawMapSection(plotCtx, -1 * plotView.locationX, -1 *plotView.locationY);
+        setPlotData();
     }
 }
 
@@ -92,6 +97,16 @@ function drawCursor(x,y) {
 function updatePlotLocation() {
     plotView.locationX = -1 * mapView.mapOffsetX + plotViewOffsets;
     plotView.locationY = -1 * mapView.mapOffsetY + plotViewOffsets;
+}
+
+// UI Functions
+function setPlotData() {
+    const plotID = ethers.utils.id(JSON.stringify(plotView));
+    document.getElementById("plotX").value = plotView.plotX;
+    document.getElementById("plotY").value = plotView.plotY;
+    document.getElementById("locationX").value = plotView.locationX;
+    document.getElementById("locationY").value = plotView.locationY;
+    document.getElementById("plotID").value = plotID;
 }
 
 drawCanvas();
