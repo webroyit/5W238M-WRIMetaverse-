@@ -42,10 +42,11 @@ function initializeMap() {
 function move(direction) {
     const validMove = validateMove(direction);
     if (validMove) {
-        console.log("yes")
-    }
-    else {
-        console.log("no")
+        updateView(direction);
+        updatePlotLocation();
+        drawMapSection(mainCtx, mapView.mapOffsetX, mapView.mapOffsetY);
+        drawCursor(plotViewOffsets, plotViewOffsets);
+        drawMapSection(plotCtx, -1 * plotView.locationX, -1 *plotView.locationY);
     }
 }
 
@@ -58,6 +59,26 @@ function validateMove(direction) {
     }
 }
 
+function updateView(direction) {
+    switch(direction){
+        case 'ArrowRight': 
+            plotView.plotX += 1;
+            mapView.mapOffsetX -= plots + roads;
+            break;
+        case 'ArrowDown': 
+            plotView.plotY += 1;
+            mapView.mapOffsetY -= plots + roads;
+            break;
+        case 'ArrowLeft': 
+            plotView.plotX -= 1;
+            mapView.mapOffsetX += plots + roads;
+            break;
+        case 'ArrowUp': 
+            plotView.plotY -= 1;
+            mapView.mapOffsetY += plots + roads;
+            break;
+    }
+}
 
 function drawMapSection(ctx,originX,originY){
     ctx.drawImage(worldImage,originX,originY);
