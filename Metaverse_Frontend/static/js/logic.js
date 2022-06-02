@@ -38,6 +38,27 @@ function initializeMap() {
     drawMapSection(plotCtx, -1 * plotView.locationX, -1 * plotView.locationY);
 }
 
+// Animate functions
+function move(direction) {
+    const validMove = validateMove(direction);
+    if (validMove) {
+        console.log("yes")
+    }
+    else {
+        console.log("no")
+    }
+}
+
+function validateMove(direction) {
+    switch(direction){
+        case 'ArrowRight': return !(plotView.plotX == 5);
+        case 'ArrowUp': return   !(plotView.plotY == 0);
+        case 'ArrowLeft': return !(plotView.plotX == 0);
+        case 'ArrowDown': return !(plotView.plotY == 5);
+    }
+}
+
+
 function drawMapSection(ctx,originX,originY){
     ctx.drawImage(worldImage,originX,originY);
 }
@@ -53,3 +74,6 @@ function updatePlotLocation() {
 }
 
 drawCanvas();
+window.addEventListener('keydown' , (e) => {
+    move(e.key)
+});
