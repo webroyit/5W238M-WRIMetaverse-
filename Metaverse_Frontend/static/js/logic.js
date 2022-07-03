@@ -545,6 +545,18 @@ function setPlotData() {
     isPlotAssignable(plotID);
 }
 
+async function isPlotAssigned(plotID) {
+    const contractOptions = {
+        contractAddress: contractAddress,
+        abi: contractABI,
+        functionName: "exist",
+        params: {
+            bytesId:plotID
+        }
+    }
+    return await Moralis.executeFunction(contractOptions);
+}
+
 Moralis.start({ serverUrl, appId }); 
 login();
 drawCanvas();
