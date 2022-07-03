@@ -526,6 +526,14 @@ function updatePlotLocation() {
     plotView.locationY = -1 * mapView.mapOffsetY + plotViewOffsets;
 }
 
+//web3 Functions
+async function login(){
+    Moralis.Web3.authenticate().then(async function (){
+        // Polygon Mumbai Testnet
+        const chainIdHex = await Moralis.switchNetwork("0x13881");
+    });
+}
+
 // UI Functions
 function setPlotData() {
     const plotID = ethers.utils.id(JSON.stringify(plotView));
@@ -537,6 +545,8 @@ function setPlotData() {
     isPlotAssignable(plotID);
 }
 
+Moralis.start({ serverUrl, appId }); 
+login();
 drawCanvas();
 window.addEventListener('keydown' , (e) => {
     move(e.key)
