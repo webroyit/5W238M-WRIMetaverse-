@@ -557,6 +557,26 @@ async function isPlotAssigned(plotID) {
     return await Moralis.executeFunction(contractOptions);
 }
 
+async function mint(_tokenURI) {
+    const contractOptions = {
+        contractAddress: contractAddress,
+        abi: contractABI,
+        functionName: "assign",
+        params: {
+            tokenURI:_tokenURI,
+            bytesId:document.getElementById("plotID").value
+        }
+    }
+    try{
+        const transaction = await Moralis.executeFunction(contractOptions);
+        await transaction.wait();
+		console.log(transaction);
+    }
+    catch(error){
+        console.log(error)
+    }
+}
+
 Moralis.start({ serverUrl, appId }); 
 login();
 drawCanvas();
