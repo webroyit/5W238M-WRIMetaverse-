@@ -526,6 +526,28 @@ function updatePlotLocation() {
     plotView.locationY = -1 * mapView.mapOffsetY + plotViewOffsets;
 }
 
+async function assignPlot() {
+    const plotID = document.getElementById("plotID").value;
+    const assigned = await isPlotAssigned(plotID);
+    if (!assigned) {
+        const metadata = {
+            "PlotID":plotID,
+            "PlotX":document.getElementById("plotX").value,
+            "PlotY":document.getElementById("plotY").value,
+            "LocationX":document.getElementById("locationX").value,
+            "LocationY":document.getElementById("locationX").value,
+            "image":"https://images.unsplash.com/photo-1629016943072-0bf0ce4e2608?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OXx8bGFuZHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60",
+        }
+        const metadataFile = new Moralis.File("metadata.json", {base64 : btoa(JSON.stringify(metadata))});
+        await metadataFile.saveIPFS();
+        const metadataURI = metadataFile.ipfs();
+        await mint(metadataURI);
+    }
+    else{
+        displayMessage("01","Plot is already assigned");
+    }
+}
+
 //web3 Functions
 async function login(){
     Moralis.Web3.authenticate().then(async function (){
